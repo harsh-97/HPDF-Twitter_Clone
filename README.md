@@ -1,5 +1,5 @@
 This is my submission for the HPDF Week 1 Task.
-I was assigned ReactJS and the task was to clone the Home Page and the Search Result page (with the query 'Aadhaar')
+I was assigned ReactJS and the task was to clone the Home Page and the Search Result page (with the query 'Aadhaar') of the Twitter website.
 
 The content of this repository has one React App which contains the required files.
 
