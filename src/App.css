@@ -1,0 +1,296 @@
+.topBar {
+	position: fixed;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.topBarLeft {
+	width: 30%;
+	margin-left: 5%;
+}
+
+.topBarMiddle {
+	width: 10%;
+}
+
+.topBarRight {
+	width: 30%;
+	margin-right: 5%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.queryBar {
+	padding-top: 50px;
+	margin-bottom: -4%;
+}
+
+.queryLabel {
+	padding-top: 1%;
+	padding-bottom: 1%;
+	padding-left: 7%;
+	font-size: 27px;
+	color: white;
+	font-weight: bold; 	
+}
+
+.querySelectors {
+	padding-left: 7%;
+	width: 40%;
+}
+
+.grid {
+	display: flex;
+	flex-direction: row;
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-top: 5%;
+}
+
+.leftColumn {
+	flex: 1;
+}
+
+.centerColumn {
+	flex: 2;
+}
+
+.rightColumn {
+	flex: 1;
+}
+
+.leftContentBox {
+	padding-top: 4%;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 5%;
+	max-width: 95%;
+	margin-bottom: 5%;
+}
+
+.leftContentBoxWrapper {
+	padding-top: 4%;
+	max-width: 95%;
+	margin-bottom: 5%;	
+}
+
+.rightContentBox {
+	padding-top: 2%;
+	padding-left: 5%;
+	padding-right: 5%;
+	max-width: 90%;
+	margin-bottom: 5%;
+}
+
+.rightContentBoxWrapper {
+	padding-top: 2%;
+	max-width: 90%;
+	margin-bottom: 5%;	
+}
+
+.name {
+	padding-left: 5px;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+.handle {
+	font-size: 80%;
+	color: grey;
+}
+
+
+.profileInfo {
+	display: flex;
+	margin-top: -5%;
+}
+
+.profilePictureFrame {
+	margin-top: -10%;
+	border-color: white;
+	border-width: 3;
+	border-style: solid;
+}
+
+.profileNameWrapper {
+	align-self: center;
+	margin-left: 5%;
+	padding-top: 10%;
+}
+
+.profileStatsHeader {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.profileStatsInfo {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.capsuleButton {
+	border-radius: 500px;
+	border-width: 1px;
+	border-style: solid;
+	padding-left: 4%;
+	padding-right: 4%;
+}
+
+.newTweet {
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background: white;
+}
+
+.newTweetInput {
+	width: 100%;
+	margin-left: 2%;
+	margin-right: 2%;
+	border-radius: 7px; 
+	padding-left: 2%;
+	border-width: 0px;
+}
+
+.tweet {
+	padding-left: 25px;
+	padding-right: 25px;
+	width: 90%;
+	display: table;
+	margin: auto;
+}
+
+.tweetContent {
+	padding-left: 1%;
+	font-size: 14px;
+	padding-right: 4%;
+}
+
+.tweetImage {
+	margin-top: 3%;
+	border-radius: 10px;
+}
+
+.tweetOptions {
+	padding-bottom: 2%;
+}
+
+.trend {
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+
+a.trendLink:link, a.trendLink:visited {
+	font-size: 14px;
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a.trendLink:hover, a.trendLink:active {
+	font-size: 14px;
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.trendStats {
+	font-size: 12px;
+	color: grey;
+}
+
+.suggestion {
+	margin-top: 5%;
+	margin-bottom: 5%;
+	display: flex;
+
+}
+
+a.infoLink {
+	font-size: 12px;
+}
+
+a.infoLink:link, a.infoLink:visited {
+	color: grey;
+	text-decoration: none;
+}
+
+a.infoLink:hover, a.infoLink:active {
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	text-decoration: underline;
+
+}
+
+a.altColorLink {
+	font-size: 12px;
+}
+
+a.altColorLink:link, a.altColorLink:visited {
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	text-decoration: none;
+}
+
+a.altColorLink:hover, a.altColorLink:active {
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	text-decoration: underline;
+}
+
+.related {
+	margin-bottom: 3%;
+}
+
+a.relatedLink:link, a.relatedLink:visited {
+	font-size: 14px;
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a.relatedLink:hover, a.relatedLink:active {
+	font-size: 14px;
+	/*Blue*/
+	/*color: #2196F3;*/ 
+	/*Red*/
+	/*color: #F44336;*/
+	/*Green*/
+	color: #4CAF50;
+	font-weight: bold;
+	text-decoration: underline;
+}
