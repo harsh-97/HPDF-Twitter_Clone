@@ -1,17 +1,30 @@
 import React from 'react';
 import { Switch, Route} from 'react-router-dom';
+
 import Mui from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {red500, white, blue500, green500, grey100, grey200, grey300, grey600} from 'material-ui/styles/colors';
+import {red500, white, blue500, green500, grey100, grey200, grey300, grey400, grey600} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import Popover from 'material-ui/Popover';
+import {Menu, MenuItem} from 'material-ui/Menu';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
+
 import HomeIcon from 'material-ui/svg-icons/action/home';
+import LightningIcon from 'material-ui/svg-icons/image/flash-on';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import NotificationIcon from 'material-ui/svg-icons/social/notifications-none';
+import PersonIcon from 'material-ui/svg-icons/social/person';
+import ListIcon from 'material-ui/svg-icons/action/view-list';
+import AtomIcon from 'material-ui/svg-icons/hardware/toys';
+import GraphIcon from 'material-ui/svg-icons/device/graphic-eq';
+import MoonIcon from 'material-ui/svg-icons/image/brightness-3';
 import PhotoIcon from 'material-ui/svg-icons/editor/insert-photo';
+import GifIcon from 'material-ui/svg-icons/action/gif';
+import PollIcon from 'material-ui/svg-icons/social/poll';
+import LocationIcon from 'material-ui/svg-icons/communication/location-on';
 import MessageIcon from 'material-ui/svg-icons/communication/chat-bubble-outline';
 import RetweetIcon from 'material-ui/svg-icons/av/loop';
 import LikeIcon from 'material-ui/svg-icons/action/thumb-up';
@@ -23,7 +36,6 @@ import LockIcon from 'material-ui/svg-icons/action/lock';
 import PeopleIcon from 'material-ui/svg-icons/social/people-outline';
 import LaunchIcon from 'material-ui/svg-icons/action/launch';
 
-import './App.css';
 import logo from './logo.svg';
 import user1DP from './User1.jpg';
 import user2DP from './User2.jpg';
@@ -31,6 +43,8 @@ import user3DP from './User3.jpg';
 import tweetImage from './tweetMedia.jpg';
 import tweetImage2 from './tweetMedia2.jpg';
 import banner from './Banner.jpg';
+
+import './App.css';
 
 
 const muiTheme = getMuiTheme({
@@ -43,13 +57,11 @@ const muiTheme = getMuiTheme({
 });
 
 
-
 function Hyperlink(props){
 	return (
 			<a href={props.redirectTo} className={props.className}>{props.displayText}</a>
 		);
 }
-
 
 
 const capsuleButtonStyles = {
@@ -88,13 +100,12 @@ const capsuleButtonStyles = {
 		},
 		fontProps:{
 			fontSize: '14px',
-			color: 'white',
+			color: white,
 			fontWeight: 'bold',	
 
 		},
 	},
 };
-
 
 
 function CapsuleButton(props){
@@ -116,7 +127,6 @@ const iconLabelStyle = {
 };
 
 
-
 function Home(props){
 	return(
 		<div style={iconLabelStyle}>
@@ -126,6 +136,15 @@ function Home(props){
 		);
 }
 
+
+function Moments(props){
+	return(
+		<div style={iconLabelStyle}>
+			<LightningIcon style={{height: 24, width: 24}} color={muiTheme.palette.alternateTextColor}/>
+			<span style={{marginLeft: '2%'}}>Moments</span>
+		</div>
+		);
+}
 
 
 function Notifications(props){
@@ -138,7 +157,6 @@ function Notifications(props){
 }
 
 
-
 function Messages(props){
 	return(
 		<div style={iconLabelStyle}>
@@ -149,11 +167,11 @@ function Messages(props){
 }
 
 
-
 function TopBarLeft(props){
 	return(
-		<Tabs className={props.className}>
+		<Tabs className={props.className} initialSelectedIndex={props.initialIndex}>
 			<Tab icon={<Home/>} href="/"/>
+			<Tab icon={<Moments/>}/>
 			<Tab icon={<Notifications/>}/>
 			<Tab label={<Messages/>}/>
 		</Tabs>
@@ -161,13 +179,11 @@ function TopBarLeft(props){
 }
 
 
-
 function NewTweetButton(props){
 	return(
 		<CapsuleButton className={capsuleButtonStyles.tweetTopBarButton} buttonText='Tweet' redirectTo={props.redirectTo}/>
 		);
 }
-
 
 
 const searchBarStyle = {
@@ -206,25 +222,101 @@ function Search(props){
 }
 
 
-
-function TopBarRight(props){
+function ProfileDropdown(props){
 	return(
-		<div className={props.className}>
-			<Search query={props.query} redirectTo={props.redirectTo}/>
-			<Avatar src={props.profilePicture} size={36}/>
-			<NewTweetButton redirectTo={props.redirectTo}/>
-		</div>
+			<Popover
+				open={props.open}
+				anchorEl={props.anchorEl}
+				anchorOrigin={props.anchorOrigin}
+				targetOrigin={props.targetOrigin}
+				onRequestClose={props.handleClose}
+				style={{borderRadius: '2%'}}>
+				<Menu desktop={true} selectedMenuItemStyle={{color: muiTheme.palette.alternateTextColor}}>
+					<div style={{paddingLeft: '5%',}}>
+						<span style={{fontWeight: 'bold', fontSize: '18px'}}>{props.name}</span>
+						<LockIcon style={{height: 16, width: 16}} color='black'/>
+						<br/>
+						<span style={{color: grey600, fontSize: '14px'}}>  @{props.userID} </span>
+					</div>
+					<Divider/>
+	        	    <MenuItem className="menuOption" leftIcon={<PersonIcon/>} primaryText="Profile"/>
+		            <MenuItem className="menuOption" leftIcon={<ListIcon/>} primaryText="Lists" />
+		            <MenuItem className="menuOption" leftIcon={<LightningIcon/>} primaryText="Moments" />
+		            <Divider/>
+		            <MenuItem className="menuOption" leftIcon={<AtomIcon/>} primaryText="Promote Mode" />
+		            <MenuItem className="menuOption" leftIcon={<LaunchIcon/>} primaryText="Twitter Ads" />
+		            <MenuItem className="menuOption" leftIcon={<GraphIcon/>} primaryText="Analytics" />
+		            <Divider/>
+		            <MenuItem className="menuOption" primaryText="Settings and privacy" />
+		            <MenuItem className="menuOption" primaryText="Help Center" />
+		            <MenuItem className="menuOption" primaryText="Keyboard shortcuts" />
+		            <MenuItem className="menuOption" primaryText="Log out" />
+		            <Divider/>
+		            <MenuItem className="menuOption" rightIcon={<MoonIcon color={muiTheme.palette.alternateTextColor}/>} primaryText="Night mode" />
+	            </Menu>
+	        </Popover>
 		);
 }
 
 
+class TopBarRight extends React.Component{
+	constructor(props)
+	{
+		super(props);
+		this.state = {
+			className: props.className,
+			query: props.query,
+			redirectTo: props.redirectTo,
+			profilePicture: props.profilePicture,
+			userID: props.userID,
+			name: props.name,
+			dropdownOpen: false,
+			anchorOrigin: {
+		        horizontal: 'left',
+		        vertical: 'bottom',
+	        },
+	    	targetOrigin: {
+		        horizontal: 'middle',
+		        vertical: 'top',
+	      	},
+		}
+	}
 
-function TopBar(props){
-	return (
+	handleClick = (event) => {
+		event.preventDefault();
+		this.setState({
+			dropdownOpen: true,
+			anchorEl: event.currentTarget,
+		});
+	}
+
+	handleClose = () => {
+		this.setState({
+			dropdownOpen: false,
+		});
+	}
+
+	render(){
+		return(
+			<div className={this.state.className}>
+				<Search query={this.state.query} redirectTo={this.state.redirectTo}/>
+				<Avatar src={this.state.profilePicture} size={36} onClick={this.handleClick}/>
+				<ProfileDropdown open={this.state.dropdownOpen} anchorEl={this.state.anchorEl}
+					anchorOrigin={this.state.anchorOrigin} targetOrigin={this.state.targetOrigin} 
+					handleClose={this.handleClose} userID={this.state.userID} name={this.state.name}/>
+				<NewTweetButton redirectTo={this.state.redirectTo}/>
+			</div>
+			);
+	}
+}
+
+
+function TopBar (props){
+	return(
 		<Paper className='topBar' style={{color: muiTheme.palette.primary1Color}}>
-				<TopBarLeft className='topBarLeft'/>
-				<a href="/"><img src={logo} style={{height: '50px'}}/></a>
-				<TopBarRight className='topBarRight' profilePicture={props.profilePicture} query={props.query} redirectTo={props.redirectTo}/>
+				<TopBarLeft className='topBarLeft' initialIndex={props.initialIndex}/>
+				<a href="/"><img src={logo} style={{height: '42px'}} alt="App Logo"/></a>
+				<TopBarRight className='topBarRight' profilePicture={props.profilePicture} query={props.query} redirectTo={props.redirectTo} userID={props.userID} name={props.name}/>
 		</Paper>
 		);
 }
@@ -237,103 +329,317 @@ const querySelectorStyles = {
 };
 
 
-function QueryBar(props){
-	return (
-		<div className='queryBar'>
-			<Paper className='queryLabel' style={{background: muiTheme.palette.alternateTextColor}}>
-				<span>{props.query}</span>
-			</Paper>
-			<Paper style={{background: 'white', display: 'flex', justifyContent: 'space-between'}}>
-				<Tabs className='querySelectors'>
-					<Tab style={querySelectorStyles} label="Top">
-					</Tab>
-					<Tab style={querySelectorStyles} label="Latest">
-					</Tab>
-					<Tab style={querySelectorStyles} label="People">
-					</Tab>
-					<Tab style={querySelectorStyles} label="Photos">
-					</Tab>
-					<Tab style={querySelectorStyles} label="Videos">
-					</Tab>
-					<Tab style={querySelectorStyles} label="News">
-					</Tab>
-					<Tab style={querySelectorStyles} label="Broadcasts">
-					</Tab>
-				</Tabs>
-				<IconButton tooltip="More search actions" tooltipPosition="bottom-center" href='/search' style={{paddingRight: '7%'}}>
-					<MoreIcon size={10}/>
-				</IconButton>
-			</Paper>
-		</div>
+function QuerySelectors(props){
+	return(
+		<Tabs className='querySelectors' initialSelectedIndex={props.initialIndex}>
+			<Tab style={querySelectorStyles} label="Top">
+			</Tab>
+			<Tab style={querySelectorStyles} label="Latest">
+			</Tab>
+			<Tab style={querySelectorStyles} label="People">
+			</Tab>
+			<Tab style={querySelectorStyles} label="Photos">
+			</Tab>
+			<Tab style={querySelectorStyles} label="Videos">
+			</Tab>
+			<Tab style={querySelectorStyles} label="News">
+			</Tab>
+			<Tab style={querySelectorStyles} label="Broadcasts">
+			</Tab>
+		</Tabs>
 		);
 }
 
 
+function MoreSearchOptions(props){
+	return(
+		<Popover
+			open={props.open}
+			anchorEl={props.anchorEl}
+			anchorOrigin={props.anchorOrigin}
+			targetOrigin={props.targetOrigin}
+			onRequestClose={props.handleClose}
+			style={{borderRadius: '3%'}}>
+			<Menu desktop={true}>
+				<MenuItem className="menuOption">
+					<div>
+						<span>Search settings</span><br/>
+						<span style={{color: grey400, fontSize: '12px'}}>Hiding sensitive content</span>
+					</div>
+				</MenuItem>
+	            <Divider/>
+	            <MenuItem className="menuOption" primaryText="Save this search" />
+	            <MenuItem className="menuOption" primaryText="Embed this search" />
+            </Menu>
+		</Popover>
+		);
+}
 
 
-function NewTweet(props){
-	return (	
-		<div className='tweet'>
-			<div className='newTweet' style={{background: muiTheme.palette.alternateTextColor, opacity: '0.3'}}>
-				<Avatar src={props.profilePicture} size={30}/>
-				<input type='text' style={{background: 'white', color: muiTheme.palette.alternateTextColor}} className='newTweetInput' placeholder="What's happening?"/> 
-				<IconButton style={{width: 30, height: 30, padding: 0}} href="/">
-					<PhotoIcon style={{height: 30, width: 30}} color={muiTheme.palette.primary1Color}/>
-				</IconButton>
+class QueryBar extends React.Component{
+	constructor(props)
+	{
+		super(props);
+		this.state = {
+			initialIndex: props.initialIndex,
+			query: props.query,
+			dropdownOpen: false,
+			anchorOrigin: {
+		        horizontal: 'left',
+		        vertical: 'bottom',
+	        },
+	    	targetOrigin: {
+		        horizontal: 'middle',
+		        vertical: 'top',
+	      	},
+		};
+	}
+
+	handleClick = (event) => {
+		event.preventDefault();
+		this.setState({
+			dropdownOpen: true,
+			anchorEl: event.currentTarget,
+		});
+	}
+
+	handleClose = () => {
+		this.setState({
+			dropdownOpen: false,
+		});
+	}
+
+	render()
+	{
+		return (
+			<div className='queryBar'>
+				<Paper className='queryLabel' style={{background: muiTheme.palette.alternateTextColor}}>
+					<span>{this.state.query}</span>
+				</Paper>
+				<Paper style={{background: white, display: 'flex', justifyContent: 'space-between'}}>
+					<QuerySelectors initialIndex={this.state.initialIndex}/>
+					<IconButton tooltip="More search actions" tooltipPosition="bottom-center" onClick={this.handleClick} style={{paddingRight: '7%'}}>
+						<MoreIcon size={10}/>
+					</IconButton>
+					<MoreSearchOptions open={this.state.dropdownOpen} anchorEl={this.state.anchorEl}
+						anchorOrigin={this.state.anchorOrigin} targetOrigin={this.state.targetOrigin} 
+						handleClose={this.handleClose} userID={this.state.userID} name={this.state.name}/>
+				</Paper>
 			</div>
-		</div>
 		);
+	}
 }
 
 
+function NewTweetActions(props){
+	return(
+		<div style={{width: '100%', paddingLeft: '5%'}}>
+			<IconButton iconStyle={{width: 30, height: 30}} style={{width: 30, height: 30, padding: 0, marginRight: '5%'}} href={props.redirectTo}>
+				<PhotoIcon color={muiTheme.palette.primary1Color}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 30, height: 30}} style={{width: 30, height: 30, padding: 0, marginRight: '5%'}} href={props.redirectTo}>
+				<GifIcon color={muiTheme.palette.primary1Color}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 30, height: 30}} style={{width: 30, height: 30, padding: 0, marginRight: '5%'}} href={props.redirectTo}>
+				<PollIcon color={muiTheme.palette.primary1Color}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 30, height: 30}} style={{width: 30, height: 30, padding: 0, marginRight: '5%'}} href={props.redirectTo}>
+				<LocationIcon color={muiTheme.palette.primary1Color}/>
+			</IconButton>
+		</div>
+	);
+}
 
-function Tweet(props){
-	return (
-		<Paper zDepth={0}>
-			<div style={{display: 'flex', padding: '1%'}}>
-				<Avatar src={props.profilePicture} size={45}/>
-				<div style={{width: '100%'}}>
-					<div style={{display: 'flex', justifyContent: 'space-between'}}>
-						<div>
-							<span className='name'>{props.name}</span>
-							<span className='handle'>  @{props.userID} <b> . </b>
-								<Hyperlink displayText={props.timeSince + 'm'} redirectTo='/' className='infoLink'/>
-							</span>
-						</div>
-						<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
-							<ExpandIcon size={10}/>
-						</IconButton>
-					</div>
-					<div className='tweetContent'>
-						{props.content}
-					</div>
-					{props.image !== '' &&
-						<div>
-							<div>
-								<a href='/'><img className='tweetImage' src={props.image} height={'20%'} width={'98%'}/></a>
-							</div>
-						</div>
-					}
-					<div className='tweetOptions'>
-						<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
-							<MessageIcon color={blue500}/>
-						</IconButton>
-						<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
-							<RetweetIcon color={green500}/>
-						</IconButton>
-						<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
-							<LikeIcon color={red500}/>
-						</IconButton>
-						<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
-							<DMIcon color={muiTheme.palette.alternateTextColor}/>
-						</IconButton>
+
+class NewTweetWindow extends React.Component{
+	constructor(props)
+	{
+		super(props);
+		this.state = {
+			profilePicture: props.profilePicture,
+			handleBlur: props.handleBlur,
+		};
+	}
+
+	render(){
+		return(
+			<div className='newTweet' style={{background: muiTheme.palette.alternateTextColor, opacity: '0.3'}}>
+				<Avatar src={this.state.profilePicture} size={30}/>
+				<div style={{width: '100%', paddingRight: '5%'}}>
+					<textarea style={{backgroundColor: white, color: muiTheme.palette.alternateTextColor}} className='newTweetInput' placeholder="What's happening?" onBlur={this.state.handleBlur} rows={4}/>
+					<div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+						<NewTweetActions redirectTo="/"/>
+						<NewTweetButton redirectTo="/"/>
 					</div>
 				</div>
 			</div>
-		</Paper>
-		);	
+		);
+	}
 }
 
+
+function NewTweetPlaceholder(props){
+	return(
+		<div className='newTweet' style={{background: muiTheme.palette.alternateTextColor, opacity: '0.3'}}>
+			<Avatar src={props.profilePicture} size={30}/>
+			<input type='text' style={{backgroundColor: white, color: muiTheme.palette.alternateTextColor}} className='newTweetPlaceholder' placeholder="What's happening?" onClick={props.handleClick}/> 
+			<IconButton iconStyle={{width: 30, height: 30}} style={{width: 30, height: 30, padding: 0}} href="/">
+				<PhotoIcon color={muiTheme.palette.primary1Color}/>
+			</IconButton>
+		</div>
+		);
+}
+
+
+class NewTweet extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			expand: false,
+			profilePicture: props.profilePicture,
+		};
+		this.handleBlur = this.handleBlur.bind(this);
+	}
+
+	handleClick = (event) => {
+		event.preventDefault();
+		this.setState({expand: true});
+	}
+
+	handleBlur(event) {
+		this.setState({expand: false});
+	}
+
+	render(){
+		return (	
+			<div className='tweet'>
+				{
+					this.state.expand ? 
+					<NewTweetWindow profilePicture={this.state.profilePicture} handleBlur={this.handleBlur}/>
+					:
+					<NewTweetPlaceholder profilePicture={this.state.profilePicture} handleClick={this.handleClick}/>
+				}
+			</div>
+		);
+	}
+}
+
+
+function TweetOptions(props){
+	return (
+		<Popover
+			open={props.open}
+			anchorEl={props.anchorEl}
+			anchorOrigin={props.anchorOrigin}
+			targetOrigin={props.targetOrigin}
+			onRequestClose={props.handleClose}
+			style={{borderRadius: '3%'}}>
+			<Menu desktop={true}>
+        	    <MenuItem className="tweetOption" primaryText="Copy link to Tweet" />
+	            <MenuItem className="tweetOption" primaryText="Embed Tweet" />
+	            <MenuItem className="tweetOption" primaryText={"Mute @" + props.userID} />
+	            <MenuItem className="tweetOption" primaryText={"Block @" + props.userID} />
+	            <MenuItem className="tweetOption" primaryText="Report Tweet" />
+	            <MenuItem className="tweetOption" primaryText="I don't like this Tweet" />
+	            <Divider/>
+	            <MenuItem className="tweetOption" primaryText="Add to new moment" />
+            </Menu>
+        </Popover>
+		);
+}
+
+
+function TweetActions(props){
+	return (
+		<div className='tweetActions'>
+			<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
+				<MessageIcon color={blue500}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
+				<RetweetIcon color={green500}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
+				<LikeIcon color={red500}/>
+			</IconButton>
+			<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} href={props.redirectTo}>
+				<DMIcon color={muiTheme.palette.alternateTextColor}/>
+			</IconButton>
+		</div>
+		);
+}
+
+
+class Tweet extends React.Component{
+	constructor(props)
+	{
+		super(props);
+		this.state = {
+			userID: props.userID,
+			profilePicture: props.profilePicture,
+			name: props.name,
+			image: props.image,
+			timeSince: props.timeSince,
+			redirectTo: props.redirectTo,
+			content: props.content,
+			tweetOptionsOpen: false,
+			anchorOrigin: {
+		        horizontal: 'left',
+		        vertical: 'bottom',
+	        },
+	    	targetOrigin: {
+		        horizontal: 'left',
+		        vertical: 'top',
+	      	},
+		};
+	}
+
+	handleClick = (event) => {
+		event.preventDefault();
+		this.setState({
+			tweetOptionsOpen: true,
+			anchorEl: event.currentTarget,
+		});
+	};
+
+	handleClose = () => {
+		this.setState({
+			tweetOptionsOpen: false,
+		});
+	};
+
+	render () {
+		return(
+			<Paper zDepth={0}>
+				<div style={{display: 'flex', padding: '1%'}}>
+					<Avatar src={this.state.profilePicture} size={45}/>
+					<div style={{width: '100%'}}>
+						<div style={{display: 'flex', justifyContent: 'space-between'}}>
+							<div>
+								<span className='name'>{this.state.name}</span>
+								<span className='handle'>  @{this.state.userID} <b> . </b>
+									<Hyperlink displayText={this.state.timeSince + 'm'} redirectTo={this.state.redirectTo} className='infoLink'/>
+								</span>
+							</div>
+							<IconButton iconStyle={{width: 16, height: 16}} style={{width: 16, height: 16, marginRight: '5%'}} onClick={this.handleClick}>
+								<ExpandIcon size={10}/>
+							</IconButton>
+						</div>
+						<div className='tweetContent'>
+							{this.state.content}
+						</div>
+						<div>
+							<a href='/'><img className='tweetImage' src={this.state.image} height={'20%'} width={'98%'} alt=''/></a>
+						</div>
+						<TweetActions redirectTo={this.state.redirectTo}/>
+					</div>
+				</div>
+				<TweetOptions open={this.state.tweetOptionsOpen} anchorEl={this.state.anchorEl} 
+					anchorOrigin={this.state.anchorOrigin} targetOrigin={this.state.targetOrigin}
+					handleClose={this.handleClose} userID={this.state.userID}/>
+			</Paper>
+		);	
+	}
+}
 
 
 class Feed extends React.Component{
@@ -361,8 +667,7 @@ class Feed extends React.Component{
 							content={tweet[4]}
 							timeSince={tweet[0]}
 							redirectTo={this.state.redirectTo}
-							image={tweet[5]}
-						/>
+							image={tweet[5]}/>
 						<Divider/>
 					</div>)
 				}
@@ -372,12 +677,11 @@ class Feed extends React.Component{
 }
 
 
-
 function ProfileInfo(props) {
 	return(
 		<Paper className='leftContentBox' zDepth={0}>
 			<div>
-				<a href='/'><img src={props.bannerPicture} height={80} width={'100%'}/></a>
+				<a href='/'><img src={props.bannerPicture} height={80} width={'100%'} alt="Profile Banner"/></a>
 			</div>
 			<div className='profileInfo'>
 				<a href='/'><Avatar src={props.profilePicture} className='profilePictureFrame' size={60}/></a>
@@ -385,7 +689,7 @@ function ProfileInfo(props) {
 					<span style={{fontWeight: 'bold', fontSize: '18px'}}>{props.name}</span>
 					<LockIcon style={{height: 16, width: 16}} color='black'/>
 					<br/>
-					<span style={{color: 'grey', fontSize: '14px'}}>  @{props.userID} </span>
+					<span style={{color: grey600, fontSize: '14px'}}>  @{props.userID} </span>
 				</div>
 			</div>
 			<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', paddingTop: '5%'}}>
@@ -407,19 +711,16 @@ function ProfileInfo(props) {
 }
 
 
-
 function FollowerRequests(props) {
 	return(
 		<Paper className='leftContentBox' zDepth={0}>
 			<CapsuleButton 
 				className={capsuleButtonStyles.requestButton} 
 				buttonText={props.numberOfRequests + ' new follower requests'}
-				redirectTo='/'
-			/>
+				redirectTo='/'/>
 		</Paper>
 		);
 }
-
 
 
 function Trend(props){
@@ -432,7 +733,6 @@ function Trend(props){
 			</div>
 		);
 }
-
 
 
 class Trends extends React.Component{
@@ -464,7 +764,6 @@ class Trends extends React.Component{
 }
 
 
-
 function Suggestion(props){
 	return (
 			<div className='suggestion'>
@@ -479,7 +778,6 @@ function Suggestion(props){
 			</div>
 		);
 }
-
 
 
 class Suggestions extends React.Component{
@@ -499,7 +797,7 @@ class Suggestions extends React.Component{
 	{
 		return (
 			<Paper zDepth={0} className={this.state.wrapperClassName}>
-				<span style={{fontSize: 18, paddingLeft: '5%'}}><b>Who to follow</b> . 
+				<span className="boxHeading">Who to follow</span><span> . 
 					<Hyperlink redirectTo={this.state.redirectTo} displayText='Refresh' className='altColorLink'/> . 
 					<Hyperlink redirectTo={this.state.redirectTo} displayText='View all' className='altColorLink'/> 
 				</span><br/>
@@ -533,16 +831,73 @@ class Suggestions extends React.Component{
 }
 
 
+function ExpandedFilterBox(props){
+	return(
+		<div className='leftContentBox'>
+			<select className="select" value={props.select1} name="select1" onChange={props.handleChange}>
+				<option value="0">From anyone</option>
+				<option value="1">People you follow</option>
+			</select><br/>
 
-function Filters(props){
-	return (
-	<Paper zDepth={0} className='leftContentBoxWrapper' style={{paddingBottom: '5%'}}>
-		<span style={{fontSize: 18, paddingLeft: '5%'}}><b>Search filters</b> . 
-		<Hyperlink redirectTo='/search' displayText='Show' className='altColorLink'/></span>
-	</Paper>
+			<select className="select" value={props.select2} name="select2" onChange={props.handleChange}>
+				<option value="0">Anywhere</option>
+				<option value="1">Near you</option>
+			</select><br/>
+
+			<select className="select" value={props.select3} name="select3" onChange={props.handleChange}>
+				<option value="0">All languages</option>
+				<option value="1">English</option>
+			</select><br/><br/>
+			<Hyperlink redirectTo={props.redirectTo} displayText="Advanced search" className="relatedLink"/>
+		</div>
 	);
 }
 
+
+class Filters extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			expanded: false,
+			linkText: 'Show',
+			select1: 0,
+			select2: 0,
+			select3: 1,
+			redirectTo: props.redirectTo,
+		};
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(event){
+		this.setState({[event.target.name]: event.target.value});
+	}
+
+	handleClick = (event) => {
+		event.preventDefault();
+		if(this.state.expanded === false)
+		{
+			this.setState({expanded: true, linkText: 'Hide'});
+		}
+		else
+		{
+			this.setState({expanded: false, linkText: 'Show'});
+		}
+	}
+
+	render(){
+		return (
+		<Paper zDepth={0} className='leftContentBoxWrapper'>
+			<span className="boxHeading">Search filters </span>.
+			<span onClick={this.handleClick}><Hyperlink redirectTo='' displayText={this.state.linkText} className='altColorLink'/></span>
+			{ this.state.expanded ? 
+				<ExpandedFilterBox select1={this.state.select1} select2={this.state.select2} select3={this.state.select3} handleChange={this.handleChange} redirectTo={this.state.redirectTo}/> 
+				: 
+				<div style={{paddingBottom: '5%'}}/>
+			}
+		</Paper>
+		);
+	}
+}
 
 
 class Related extends React.Component{
@@ -557,7 +912,7 @@ class Related extends React.Component{
 	{
 		return(
 			<Paper zDepth={0} className='leftContentBoxWrapper'>
-				<span style={{fontSize: 18, paddingLeft: '5%'}}><b>Related searches</b></span>
+				<span className="boxHeading">Related searches</span>
 				<div className='leftContentBox'>
 				{
 					this.state.suggestions.map(related => <div key={related[0]} className='related'> <Hyperlink redirectTo='/search' displayText={related[1]} className='relatedLink'/></div>)
@@ -569,33 +924,32 @@ class Related extends React.Component{
 }
 
 
-
 function TwitterInfo(props){
 	return (
 		<Paper zDepth={0} className="rightContentBoxWrapper">
 			<Paper zDepth={0} className='rightContentBox'>
 				<span style={{color: "grey", fontSize: '12px'}}>{"© 2017 Twitter  "}</span>
-				<Hyperlink redirectTo='/' displayText='About  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Help Center  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Terms  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Privacy policy  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Cookies   ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Ads info  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Brand  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Blog  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Status  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Apps  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Jobs  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Marketing  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Businesses  ' className='infoLink'/>
-				<Hyperlink redirectTo='/' displayText='Developers  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='About  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Help Center  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Terms  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Privacy policy  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Cookies   ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Ads info  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Brand  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Blog  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Status  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Apps  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Jobs  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Marketing  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Businesses  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Developers  ' className='infoLink'/>
 			</Paper>
 			<Divider/>
 			<Paper zDepth={0}>
-					<IconButton tooltip="Advertise with Twitter" tooltipPosition="top-center" href='/'>
+					<IconButton tooltip="Advertise with Twitter" tooltipPosition="top-center" href={props.redirectTo}>
 						<LaunchIcon color={muiTheme.palette.alternateTextColor}/>
 					</IconButton>
-					<Hyperlink redirectTo='/' displayText="Advertise with Twitter" className='altColorLink'/>
+					<Hyperlink redirectTo={props.redirectTo} displayText="Advertise with Twitter" className='altColorLink'/>
 			</Paper>
 		</Paper>
 		);
@@ -607,17 +961,16 @@ function SmallTwitterInfo(props){
 		<div className="leftContentBoxWrapper">
 			<div className="leftContentBox">
 				<span style={{color: "grey", fontSize: '12px'}}>{"© 2017 Twitter "}</span>
-				<Hyperlink redirectTo='/search' displayText='About  ' className='infoLink \'/>
-				<Hyperlink redirectTo='/search' displayText='Help Center  ' className='infoLink'/>
-				<Hyperlink redirectTo='/search' displayText='Terms  ' className='infoLink'/><br/>
-				<Hyperlink redirectTo='/search' displayText='Privacy policy  ' className='infoLink'/>
-				<Hyperlink redirectTo='/search' displayText='Cookies  ' className='infoLink'/>
-				<Hyperlink redirectTo='/search' displayText='Ads info  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='About  ' className='infoLink \'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Help Center  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Terms  ' className='infoLink'/><br/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Privacy policy  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Cookies  ' className='infoLink'/>
+				<Hyperlink redirectTo={props.redirectTo} displayText='Ads info  ' className='infoLink'/>
 			</div>
 		</div>
-		);
+	);
 }
-
 
 
 class HomePage extends React.Component{
@@ -659,15 +1012,14 @@ class HomePage extends React.Component{
 	{
 		return (
 			<Mui muiTheme={muiTheme}>
-				<TopBar profilePicture={this.state.profilePicture} redirectTo='/'/>
+				<TopBar profilePicture={this.state.profilePicture} redirectTo='/' initialSelected={0} userID={this.state.userID} name={this.state.name} />
 				<div className='grid'>
 					<div className='leftColumn'>
 						<ProfileInfo 
 							name={this.state.name} 
 							userID={this.state.userID} 
 							profilePicture={this.state.profilePicture}
-							bannerPicture={this.state.bannerPicture}
-						/>
+							bannerPicture={this.state.bannerPicture}/>
 						<FollowerRequests numberOfRequests={this.state.numberOfRequests}/>
 						<Trends trends={this.state.trends} redirectTo='/'/>
 					</div>
@@ -677,14 +1029,13 @@ class HomePage extends React.Component{
 					</div>
 					<div className='rightColumn'>
 						<Suggestions recommended={this.state.recommended} wrapperClassName='rightContentBoxWrapper' className="rightContentBox" redirectTo='/'/>
-						<TwitterInfo/>
+						<TwitterInfo redirectTo="/"/>
 					</div>
 				</div>
 			</Mui>
-			);
+		);
 	}
 }
-
 
 
 class SearchPage extends React.Component{
@@ -730,29 +1081,26 @@ class SearchPage extends React.Component{
 	{
 		return (
 			<Mui muiTheme={muiTheme}>
-			<TopBar profilePicture={this.state.profilePicture} query={this.state.query} redirectTo='/search'/>
-			<QueryBar query={this.state.query}/>
-			<div className='grid'>
-				<div className='leftColumn'>
-					<Filters/>
-					<Related suggestions={this.state.suggestions}/>
-					<Suggestions recommended={this.state.recommended} wrapperClassName="leftContentBoxWrapper" className="leftContentBox" redirectTo='/search'/>
-					<Trends trends={this.state.trends} redirectTo="/search"/>
-					<SmallTwitterInfo/>
+				<TopBar profilePicture={this.state.profilePicture} initialIndex={-1} query={this.state.query} redirectTo='/search' userID={this.state.userID} name={this.state.name}/>
+				<QueryBar initialIndex={1} query={this.state.query}/>
+				<div className='grid'>
+					<div className='leftColumn'>
+						<Filters redirectTo="/search"/>
+						<Related suggestions={this.state.suggestions}/>
+						<Suggestions recommended={this.state.recommended} wrapperClassName="leftContentBoxWrapper" className="leftContentBox" redirectTo='/search'/>
+						<Trends trends={this.state.trends} redirectTo="/search"/>
+						<SmallTwitterInfo redirectTo="/search"/>
+					</div>
+					<div className='centerColumn'>
+						<Feed tweets={this.state.tweets} profilePicture={this.state.profilePicture} redirectTo="/search"/>
+					</div>
+					<div className='rightColumn'>
+					</div>
 				</div>
-				<div className='centerColumn'>
-					<Feed tweets={this.state.tweets} profilePicture={this.state.profilePicture} redirectTo="/search"/>
-				</div>
-				<div className='rightColumn'>
-				</div>
-			</div>
 			</Mui>
-			);
+		);
 	}
 }
-
-
-
 
 
 
