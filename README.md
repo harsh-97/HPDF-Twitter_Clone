@@ -1,7 +1,7 @@
 This is my submission for the HPDF Week 1 Task.
-I was assigned ReactJS and the task was to clone the Home Page and the Search Result page (with the query 'Aadhaar') of the Twitter website.
+I was assigned ReactJS and the task was to clone the Home Page and the Search Result page (with the query 'Aadhaar') of the Twitter website.  
 
-The content of this repository has one React App which contains the required files.
+The content of this repository has one React App which contains the required files.  
 
 To run the app, follow the following steps
 
@@ -13,43 +13,44 @@ To run the app, follow the following steps
 
 3) Run the following command
 
-  npm install
+  `npm install`
 
 The command will download the necessary dependencies to run the app.
 
 
 4) When the download is complete, run the following command to start the app
 
-  npm start
+  `npm start`
 
 This will start the React App
 
 
 5) If a browser window (or tab) hadn't opened as of yet, open one manually and go to:
   
-  localhost:3000/
+  `localhost:3000/`
 
-
-
-
+  
+  
+  
 
 Details: 
 
 The React App has the following packages:
 The packages which come with create-react-app
 Material-ui
-React-Router (specifically React-Router-DOM)
+React-Router (specifically React-Router-DOM)  
 
 
 The app has two endpoints:
 1) /
-2) /search
+2) /search  
 
-Which point to the two pages which had to be included in the app
+Which point to the two pages which had to be included in the app  
 
 
 
-The below is the auto generated README.md created when create-react-app is run. It provides details for some of the packages installed.
+The below is the auto generated README.md created when create-react-app is run. It provides details for some of the packages installed.  
+  
 __________________________________________________________________________________________________________________________________________________
 
 
